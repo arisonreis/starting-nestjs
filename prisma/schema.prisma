@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String  @db.VarChar(255)
+  description String? @db.Text
+  Vide        Video[]
+}
+
+model Video {
+  id          String   @id @default(uuid())
+  title       String   @db.VarChar(255)
+  description String?  @db.Text
+  file_path         String   @db.Text
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id  String
+}
